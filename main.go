@@ -7,6 +7,8 @@ import (
 	"os"
 )
 
+var score int
+
 func main() {
 	// Get Flags
 	flg := getFlags()
@@ -19,7 +21,11 @@ func main() {
 	if quizzes == nil {
 		errorHandler(errors.New("No Quizzes"))
 	}
-
+	presentQuizzes(quizzes)
+	_, err = fmt.Fprintf(os.Stdout, "Your total score is %d\n", score)
+	if err != nil {
+		errorHandler(err)
+	}
 }
 
 func errorHandler(err error) {
