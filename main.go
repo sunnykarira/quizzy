@@ -21,7 +21,7 @@ func main() {
 	if quizzes == nil {
 		errorHandler(errors.New("No Quizzes"))
 	}
-	presentQuizzes(quizzes)
+	presentQuizzes(flg, quizzes)
 	_, err = fmt.Fprintf(os.Stdout, "Your total score is %d\n", score)
 	if err != nil {
 		errorHandler(err)
