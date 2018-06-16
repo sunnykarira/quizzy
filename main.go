@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -14,7 +15,11 @@ func main() {
 	if err != nil {
 		errorHandler(err)
 	}
-	fmt.Print(string(f))
+	quizzes := read(string(f))
+	if quizzes == nil {
+		errorHandler(errors.New("No Quizzes"))
+	}
+
 }
 
 func errorHandler(err error) {
