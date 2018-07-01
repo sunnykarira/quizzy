@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"os"
 	"strings"
+	"time"
 )
 
 func presentQuizzes(flg *flags, quizzes [][]string) {
@@ -20,7 +21,17 @@ func presentQuizzes(flg *flags, quizzes [][]string) {
 		if err != nil {
 			errorHandler(err)
 		}
+		// ticker for flg.Timer seconds
+		ticker := time.NewTicker(time.Duration(flg.timer) * time.Second)
+		go func(ticker *time.Ticker, score int) {
+			for _ = range ticker.C {
+				fmt.Fprint(os.Stdout, "Time Finished\n")
+				fmt.Fprintf(os.Stdout, "Your score is %d\n", score)
+				os.Exit(1)
+			}
+		}(ticker, score)
 		fmt.Scanln(&input)
+		ticker.Stop()
 		if strings.TrimSpace(input) == answer {
 			score++
 			fmt.Fprint(os.Stdout, "Correct Answer\n")
